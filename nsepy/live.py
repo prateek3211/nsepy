@@ -12,7 +12,7 @@ from nsepy.liveurls import quote_eq_url, quote_derivative_url, option_chain_url
 
 eq_quote_referer = "https://www.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol={}&illiquid=0&smeFlag=0&itpFlag=0"
 derivative_quote_referer = "https://www.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuoteFO.jsp?underlying={}&instrument={}&expiry={}&type={}&strike={}"
-option_chain_referer = "https://www.nseindia.com/live_market/dynaContent/live_watch/option_chain/optionKeys.jsp?symbolCode=-9999&symbol=NIFTY&symbol=BANKNIFTY&instrument=OPTIDX&date=-&segmentLink=17&segmentLink=17"
+option_chain_referer = "https://www.nseindia.com/live_market/dynaContent/live_watch/option_chain/optionKeys.jsp?segmentLink=17&symbol={}&instrument={}&date={}"
 
 def get_quote(symbol, series='EQ', instrument=None, expiry=None, option_type=None, strike=None):
     """
@@ -24,10 +24,9 @@ def get_quote(symbol, series='EQ', instrument=None, expiry=None, option_type=Non
     """
 
     if instrument:
-        expiry_str = "%02d%s%d"%(expiry.day, months[expiry.month][0:3].upper(), expiry.year)
+        #expiry_str = "%02d%s%d"%(expiry.day, months[expiry.month][0:3].upper(), expiry.year)
         quote_derivative_url.session.headers.update({'Referer': eq_quote_referer.format(symbol)})
-        strike_str = "{:.2f}".format(strike) if strike else "" 
-        res = quote_derivative_url(symbol, instrument, expiry_str, option_type, strike_str)
+        res = quote_derivative_url(symbol, instrument, expiry, option_type, strike)
     else:
         quote_eq_url.session.headers.update({'Referer': eq_quote_referer.format(symbol)})
         res = quote_eq_url(symbol, series)
@@ -49,10 +48,10 @@ def get_quote(symbol, series='EQ', instrument=None, expiry=None, option_type=Non
 
 def get_option_chain(symbol, instrument=None, expiry=None):
 
-    if expiry:
+    '''if expiry:
         expiry_str = "%02d%s%d"%(expiry.day, months[expiry.month][0:3].upper(), expiry.year)
     else:
-        expiry_str = "-"
+        expiry_str = "-"'''
     option_chain_url.session.headers.update({'Referer': option_chain_referer})
-    r = option_chain_url(symbol, instrument, expiry_str)
+    r = option_chain_url(symbol, instrument, expiry)
 
