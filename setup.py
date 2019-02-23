@@ -18,7 +18,7 @@ setup(
     [console_scripts]
     nsecli=nsepy.cli:cli
   ''',
-  download_url = 'https://github.com/prateek3211/nsepy/archive/v0.1.zip', 
+  download_url = 'https://github.com/prateek3211/nsepy/archive/v0.1.tar.gz', 
   install_requires = ['beautifulsoup4', 'requests', 'numpy', 'pandas', 'six', 'click', 'lxml'],
   keywords = ['testing', 'logging', 'example'], # arbitrary keywords
   classifiers = [],
